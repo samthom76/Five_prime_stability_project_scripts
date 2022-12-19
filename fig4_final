@@ -1,0 +1,49 @@
+library(tidyverse)
+library(dplyr)
+library(ggpubr)
+#read csv into r and convert na to NA so r can read NA correctly
+data <- read.csv("/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/analysis.csv",
+header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
+
+#Scatter plot for GC pressure vs difference in GC
+#making data frane with only variables being used
+df5p3 <- data.frame(data$X5._gc_ratio, data$X3._gc_ratio, data$mid_gc_ratio, data$gc3_ratio)
+#removing rows with na
+df5p3 <- na.omit(df5p3)
+#working out differnces in GC between end and core of genome
+df5p3$f_t <- (df5p3$data.X5._gc_ratio - df5p3$data.X3._gc_ratio)
+df5p3$f_c <- (df5p3$data.X3._gc_ratio - df5p3$data.mid_gc_ratio)
+#plotting scatter
+p2 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 5' - Core GC", cor.coeff.args = list(label.y = -0.11))
+p2 <- p2 + ggtitle("A - Genomic GC3 vs Difference in 5' - Core GC") + theme(plot.title = element_text(hjust = -0.2))
+p2 <- p2 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p2 <- p2 + theme(text = element_text(size = 18))
+p2 <- p2 + theme(plot.title = element_text(hjust = -0.2))
+p3 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 3' - Core GC")
+p3 <- p3 + ggtitle("B - Genomic GC3 vs Difference in 3' -  Core GC") + theme(plot.title = element_text(hjust = -0.2))
+p3 <- p3 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p3 <- p3 + theme(text = element_text(size = 18))
+p3 <- p3 + theme(plot.title = element_text(hjust = -0.2))
+
+#Scatter plot for GC pressure vs difference in GC3
+df5p3 <- data.frame(data$X5._gc3_ratio, data$X3._gc3_ratio, data$mid_gc3_ratio, data$gc3_ratio)
+df5p3 <- na.omit(df5p3)
+df5p3$f_t <- (df5p3$data.X5._gc3_ratio - df5p3$data.X3._gc3_ratio)
+df5p3$f_c <- (df5p3$data.X3._gc3_ratio - df5p3$data.mid_gc3_ratio)
+p5 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 5' - Core GC3", cor.coeff.args = list(label.y = -0.125))
+p5 <- p5 + ggtitle("C - Genomic GC3 vs Difference in 5' - Core GC3") + theme(plot.title = element_text(hjust = -0.2))
+p5 <- p5 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p5 <- p5 + theme(text = element_text(size = 18))
+p5 <- p5 + theme(plot.title = element_text(hjust = -0.2))
+p6 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 3' - Core GC3", cor.coeff.args = list(label.y = -0.125))
+p6 <- p6 + ggtitle("D - Genomic GC3 vs Difference in 3' - Core GC3") + theme(plot.title = element_text(hjust = -0.2))
+p6 <- p6 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p6 <- p6 + theme(text = element_text(size = 18))
+p6 <- p6 + theme(plot.title = element_text(hjust = -0.2))
+
+#plotting graphs into pdf
+pdf(file = "/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/R_Project/fig4.pdf", height = 13.2, width = 18)
+par(pty = 's')
+require(gridExtra)
+grid.arrange(p2, p3, p5, p6, ncol=2)
+dev.off()

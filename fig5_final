@@ -1,0 +1,33 @@
+library(tidyverse)
+library(dplyr)
+library(ggpubr)
+#read csv into r and convert na to NA so r can read NA correctly
+data <- read.csv("/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/analysis.csv",
+header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
+
+#Scatter plot for GC pressure vs difference in stability
+#making data frane with only variables being used
+df5p3 <- data.frame(data$fp_stab, data$tp_stab, data$mid_stab, data$gc3_ratio)
+#removing rows with na
+df5p3 <- na.omit(df5p3)
+#working out differnces in stability between end and core of genome
+df5p3$f_t <- (df5p3$data.fp_stab - df5p3$data.tp_stab)
+df5p3$f_c <- (df5p3$data.tp_stab - df5p3$data.mid_stab)
+#plotting scatter
+p8 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 5' - Core Stability")
+p8 <- p8 + ggtitle("A - Genomic GC3 vs Difference in 5' - Core mRNA Stability") + theme(plot.title = element_text(hjust = -0.2))
+p8 <- p8 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p8 <- p8 + theme(text = element_text(size = 17.5))
+p8 <- p8 + theme(plot.title = element_text(hjust = -0.2))
+p9 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 3' - Core Stability")
+p9 <- p9 + ggtitle("B - Genomic GC3 vs Difference in 3' - Core mRNA Stability") + theme(plot.title = element_text(hjust = -0.2))
+p9 <- p9 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p9 <- p9 + theme(text = element_text(size = 17.5))
+p9 <- p9 + theme(plot.title = element_text(hjust = -0.2))
+
+#plotting graphs into pdf
+pdf(file = "/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/R_Project/fig5.pdf", height = 6.6, width = 18)
+par(pty = 's')
+require(gridExtra)
+grid.arrange(p8, p9, ncol=2)
+dev.off()

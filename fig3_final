@@ -1,0 +1,85 @@
+library(tidyverse)
+library(dplyr)
+#read csv into r and convert na to NA so r can read NA correctly
+data <- read.csv("/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/analysis.csv",
+header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
+
+#Violin plot for diffence in GC content
+#making data frane with only variables being used
+df5p <- data.frame(data$X5._gc_ratio, data$X3._gc_ratio, data$mid_gc_ratio)
+#removing rows with na
+df5p <- na.omit(df5p)
+#working out differnces in GC between end and core of genome
+df5p$f_t <- (df5p$data.X5._gc_ratio - df5p$data.mid_gc_ratio)
+df5p$f_c <- (df5p$data.X3._gc_ratio - df5p$data.mid_gc_ratio)
+df5p$n_t <- "5' - Core'"
+df5p$n_c <- "3' - Core"
+#converted the data into format for violin plot
+#two collumns, one with values, and one with corresponding gene section
+df5pn <- data.frame(df5p$n_t, df5p$n_c)
+df5pn <- data.frame(df5p.n_t=unlist(df5pn, use.names = FALSE))
+df5pv <- data.frame(df5p$f_t, df5p$f_c)
+df5pv <- data.frame(df5p.f_t=unlist(df5pv, use.names = FALSE))
+df5pt <- data.frame(data.frame(df5pn$df5p.n_t), data.frame(df5pv$df5p.f_t))
+df5pt$df5pn.df5p.n_t <- as.factor(df5pt$df5pn.df5p.n_t)
+#plotting violin
+p1 <- ggplot(df5pt, aes(x = df5pn.df5p.n_t, y = df5pv.df5p.f_t, fill = df5pn.df5p.n_t)) + geom_violin() + geom_boxplot(width=.1) +  scale_y_continuous(n.breaks = 6)
+p1 <- p1 + xlab("Gene Section") + ylab("Difference in GC")
+p1 <- p1 + theme_bw()
+p1 <- p1 + scale_fill_grey(start = 0.3, end = .9)
+p1 <- p1 + theme(legend.position="none")
+p1 <- p1 + theme(text = element_text(size = 23))
+p1 <- p1 + ggtitle("A - Difference in GC by Gene Section") + theme(plot.title = element_text(hjust = -0.2), )
+p1 <- p1 + theme(plot.margin = unit(c(5.5, 5.5, 5.5, 3), "mm"))
+
+#Violin plot for differnce in GC3 content
+df5p3 <- data.frame(data$X5._gc3_ratio, data$X3._gc3_ratio, data$mid_gc3_ratio)
+df5p3 <- na.omit(df5p3)
+df5p3$f_t <- (df5p3$data.X5._gc3_ratio - df5p3$data.mid_gc3_ratio)
+df5p3$f_c <- (df5p3$data.X3._gc3_ratio - df5p3$data.mid_gc3_ratio)
+df5p3$n_t <- "5' - Core'"
+df5p3$n_c <- "3' - Core"
+df5p3n <- data.frame(df5p3$n_t, df5p3$n_c)
+df5p3n <- data.frame(df5p3.n_t=unlist(df5p3n, use.names = FALSE))
+df5p3v <- data.frame(df5p3$f_t, df5p3$f_c)
+df5p3v <- data.frame(df5p3.f_t=unlist(df5p3v, use.names = FALSE))
+df5p3t <- data.frame(data.frame(df5p3n$df5p3.n_t), data.frame(df5p3v$df5p3.f_t))
+df5p3t$df5p3n.df5p3.n_t <- as.factor(df5p3t$df5p3n.df5p3.n_t)
+p2 <- ggplot(df5p3t, aes(x = df5p3n.df5p3.n_t, y = df5p3v.df5p3.f_t, fill = df5p3n.df5p3.n_t)) + geom_violin() + geom_boxplot(width=.1) +  scale_y_continuous(n.breaks = 6)
+p2 <- p2 + xlab("Gene Section") + ylab("Difference in GC3")
+p2 <- p2 + theme_bw()
+p2 <- p2 + scale_fill_grey(start = 0.3, end = .9)
+p2 <- p2 + theme(legend.position="none")
+p2 <- p2 + theme(text = element_text(size = 23))
+p2 <- p2 + ggtitle("B - Difference in GC3 by Gene Section") + theme(plot.title = element_text(hjust = -0.2))
+p2 <- p2 + theme(plot.margin = unit(c(5.5, 5.5, 5.5, 5.5), "mm"))
+
+#Violin plot for difference in Stability
+df5ps <- data.frame(data$fp_stab, data$tp_stab, data$mid_stab)
+df5ps <- na.omit(df5ps)
+df5ps$f_t <- (df5ps$data.fp_stab - df5ps$data.mid_stab)
+df5ps$f_c <- (df5ps$data.tp_stab - df5ps$data.mid_stab)
+df5ps$n_t <- "5' - Core'"
+df5ps$n_c <- "3' - Core"
+df5psn <- data.frame(df5ps$n_t, df5ps$n_c)
+df5psn <- data.frame(df5ps.n_t=unlist(df5psn, use.names = FALSE))
+df5psv <- data.frame(df5ps$f_t, df5ps$f_c)
+df5psv <- data.frame(df5ps.f_t=unlist(df5psv, use.names = FALSE))
+df5pst <- data.frame(data.frame(df5psn$df5ps.n_t), data.frame(df5psv$df5ps.f_t))
+df5pst$df5psn.df5ps.n_t <- as.factor(df5pst$df5psn.df5ps.n_t)
+p3 <- ggplot(df5pst, aes(x = df5psn.df5ps.n_t, y = df5psv.df5ps.f_t, fill = df5psn.df5ps.n_t)) + geom_violin() + geom_boxplot(width=.1) +  scale_y_continuous(n.breaks = 6)
+p3 <- p3 + xlab("Gene Section") + ylab(expression(paste("Difference in RNA Stability(", Delta, "G)")))
+p3 <- p3 + theme_bw()
+p3 <- p3 + scale_fill_grey(start = 0.3, end = .9)
+p3 <- p3 + theme(legend.position="none")
+p3 <- p3 + theme(text = element_text(size = 23))
+p3 <- p3 + ggtitle(expression(paste("C -Difference in RNA Stability(", Delta, "G) by Gene Section")))
+p3 <- p3 + theme(plot.title = element_text(hjust = -0.2))
+p3 <- p3 + theme(plot.margin = unit(c(5.5, 3, 5.5, 5.5), "mm"))
+
+#plotting graphs into pdf
+pdf(file = "/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/R_Project/fig3.pdf", height = 10, width = 30)
+par(pty = 's')
+require(gridExtra)
+grid.arrange(p1, p2, p3, ncol=3)
+dev.off()
