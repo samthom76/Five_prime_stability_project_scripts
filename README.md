@@ -127,14 +127,21 @@ Input = Thermobase_matches.csv
 Input = Tempura_matches.csv
 Output = Unique_temp.csv
 
+crawlerkmerforunkowntemps.py
+Note: This code was written and sourced from Kate Daniels
+Aim = Use CnnPOGTP to predict optimal growth temperatures for all genomes in the analysis
+Extra Step: Install packages listed in code
+Input = Archeal filtered genomes, Bacterial filtered genomes
+Output = unknown_tempresults.txt
+
 join_csv.py
-Aim = Merge the csv's created in previous steps to create a 'final' csv. GC_Analysis.csv will be the
-starting point and merged with GC_trna_Analysis.csv, GC_rrna_Analysis.csv and Unique_temp.csv
+Aim = Merge the csv's created in previous steps to create a 'final' csv for analysis in R
 Input = GC_Analysis.csv
 Input = GC_trna_Analysis.csv
 Input =  GC_rrna_Analysis.csv
 Input = GC_Analysis_final.csv
 Input = Unique_temp.csv
+Input = unknown_tempresults.txt
 Output= Final_analysis.csv
 
 
