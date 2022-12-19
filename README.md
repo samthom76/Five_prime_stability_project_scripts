@@ -2,7 +2,8 @@
 README
 
 The aim of the project is to extract the gene and structural rna sequences for a collection of filtered
-bacterial and archeal genomes and then analyse their GC/GC3 content and structural stability
+bacterial and archeal genomes and then analyse their GC/GC3 content and structural stability. For more
+detail code is annotated explaining individual steps in each proccess.
 Extra Step = Install Pandas module. If using pycharm this can be installed through 'preferences' if
 using terminal install from these instructions: https://pandas.pydata.org/docs/getting_started/install.html
 Extra Step: Install Vienna RNA package instructions can be found here: https://www.tbi.univie.ac.at/RNA/
