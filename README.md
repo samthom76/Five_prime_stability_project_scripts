@@ -142,7 +142,7 @@ Input =  GC_rrna_Analysis.csv
 Input = GC_Analysis_final.csv
 Input = Unique_temp.csv
 Input = unknown_tempresults.txt
-Output= Final_analysis.csv
+Output= analysis.csv
 
 
 
