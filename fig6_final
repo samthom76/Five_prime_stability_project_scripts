@@ -10,7 +10,6 @@ header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
 df5p3 <- data.frame(data$X5._gc3_ratio, data$X3._gc3_ratio, data$mid_gc3_ratio, data$predictedoptimumtemp)
 #removing rows with na
 df5p3 <- na.omit(df5p3)
-df5p3$f_t <- (df5p3$data.X5._gc3_ratio - df5p3$data.X3._gc3_ratio)
 df5p3$f_m <- (df5p3$data.X5._gc3_ratio - df5p3$data.mid_gc3_ratio)
 df5p3$f_c <- (df5p3$data.X3._gc3_ratio - df5p3$data.mid_gc3_ratio)
 #plotting scatter
@@ -25,7 +24,6 @@ p6 <- p6 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 df5p3 <- data.frame(data$fp_stab, data$tp_stab, data$mid_stab, data$predictedoptimumtemp)
 df5p3 <- na.omit(df5p3)
-df5p3$f_t <- (df5p3$data.fp_stab - df5p3$data.tp_stab)
 df5p3$f_m <- (df5p3$data.fp_stab - df5p3$data.mid_stab)
 df5p3$f_c <- (df5p3$data.tp_stab - df5p3$data.mid_stab)
 p8 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Topt", ylab = "Difference in 5' - Core Stability", cor.coeff.args = list(label.x = 75))

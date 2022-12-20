@@ -11,7 +11,7 @@ df5p3 <- data.frame(data$X5._gc_ratio, data$X3._gc_ratio, data$mid_gc_ratio, dat
 #removing rows with na
 df5p3 <- na.omit(df5p3)
 #working out differnces in GC between end and core of genome
-df5p3$f_t <- (df5p3$data.X5._gc_ratio - df5p3$data.X3._gc_ratio)
+df5p3$f_m <- (df5p3$data.X5._gc_ratio - df5p3$data.mid_gc_ratio)
 df5p3$f_c <- (df5p3$data.X3._gc_ratio - df5p3$data.mid_gc_ratio)
 #plotting scatter
 p2 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 5' - Core GC", cor.coeff.args = list(label.y = -0.11))
@@ -28,7 +28,7 @@ p3 <- p3 + theme(plot.title = element_text(hjust = -0.2))
 #Scatter plot for GC pressure vs difference in GC3
 df5p3 <- data.frame(data$X5._gc3_ratio, data$X3._gc3_ratio, data$mid_gc3_ratio, data$gc3_ratio)
 df5p3 <- na.omit(df5p3)
-df5p3$f_t <- (df5p3$data.X5._gc3_ratio - df5p3$data.X3._gc3_ratio)
+df5p3$f_m <- (df5p3$data.X5._gc3_ratio - df5p3$data.mid_gc3_ratio)
 df5p3$f_c <- (df5p3$data.X3._gc3_ratio - df5p3$data.mid_gc3_ratio)
 p5 <- ggscatter(df5p3, x = "data.gc3_ratio", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Genomic GC3", ylab = "Difference in 5' - Core GC3", cor.coeff.args = list(label.y = -0.125))
 p5 <- p5 + ggtitle("C - Genomic GC3 vs Difference in 5' - Core GC3") + theme(plot.title = element_text(hjust = -0.2))
