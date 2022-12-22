@@ -1,0 +1,35 @@
+library(tidyverse)
+library(dplyr)
+library(ggpubr)
+
+#read csv into r and convert na to NA so r can read NA correctly
+data <- read.csv("/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/analysis.csv",
+header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
+
+
+
+df5p <- data.frame(data$X5._gc3_ratio, data$mid_gc3_ratio, data$fp_stab, data$mid_stab)
+
+df5p$f_m <- (df5p$data.X5._gc3_ratio - df5p$data.mid_gc3_ratio)
+df5p$s_m <- (df5p$data.fp_stab - df5p$data.mid_stab)
+
+p1 <- ggscatter(df5p, x = "f_m", y = "s_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, ylab = "Differnce in 5' and Core mRNA Stability", xlab = "Differnce in 5' and Core GC3")
+p1 <- p1 + ggtitle("A - 5' - Core GC3 vs 5' - Core mRNA Stability") + theme(plot.title = element_text(hjust = -0.2))
+p1 <- p1 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p1 <- p1 + theme(text = element_text(size = 17.5))
+
+df5p2 <- data.frame(data$X3._gc3_ratio, data$mid_gc3_ratio, data$tp_stab, data$mid_stab)
+
+df5p2$f_m <- (df5p2$data.X3._gc3_ratio - df5p2$data.mid_gc3_ratio)
+df5p2$s_m <- (df5p2$data.tp_stab - df5p2$data.mid_stab)
+
+p2 <- ggscatter(df5p2, x = "f_m", y = "s_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, ylab = "Differnce in 3' and Core mRNA Stability", xlab = "Differnce in 3' and Core GC3")
+p2 <- p2 + ggtitle("A - 5' - Core GC3 vs 5' - Core mRNA Stability") + theme(plot.title = element_text(hjust = -0.2))
+p2 <- p2 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
+p2 <- p2 + theme(text = element_text(size = 17.5))
+
+pdf(file = "/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/R_Project/appendix_stab_gc3.pdf", height = 6.6, width = 18)
+par(pty = 's')
+require(gridExtra)
+grid.arrange(p1,p2, ncol=2)
+dev.off()

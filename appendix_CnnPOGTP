@@ -1,0 +1,20 @@
+library(tidyverse)
+library(dplyr)
+library(ggpubr)
+#read csv into r
+data <- read.csv("/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/analysis.csv",
+header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
+head(data)
+#str(data)
+
+df1 <- data.frame(data$temp, data$predictedoptimumtemp)
+df1 <- na.omit(df1)
+p1 <- ggscatter(df1, x = "data.predictedoptimumtemp", y = "data.temp", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', xlab = "Predicted Topt", ylab = "Experimental Topt")
+p1 <- p1 + theme(text = element_text(size = 18))
+p1 <- p1 + ggtitle("Predicted Topt vs Experimental Topt") + theme(plot.title = element_text(hjust = -0.2))
+
+pdf(file = "/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/R_Project/appendix1.pdf", height = 6.6, width = 9)
+par(pty = 's')
+require(gridExtra)
+grid.arrange(p1, ncol=1)
+dev.off()
