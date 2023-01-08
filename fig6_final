@@ -5,7 +5,7 @@ library(ggpubr)
 data <- read.csv("/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/analysis.csv",
 header=TRUE, stringsAsFactors=FALSE, na.strings=c("na","NA"))
 
-#Scatter plot for Topt vs difference in GC3 and stability
+#Scatter plot for Optimal Growth Temperature vs difference in GC3 and stability
 #making data frane with only variables being used
 df5p3 <- data.frame(data$X5._gc3_ratio, data$X3._gc3_ratio, data$mid_gc3_ratio, data$predictedoptimumtemp)
 #removing rows with na
@@ -13,26 +13,26 @@ df5p3 <- na.omit(df5p3)
 df5p3$f_m <- (df5p3$data.X5._gc3_ratio - df5p3$data.mid_gc3_ratio)
 df5p3$f_c <- (df5p3$data.X3._gc3_ratio - df5p3$data.mid_gc3_ratio)
 #plotting scatter
-p5 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Topt", ylab = "Difference in 5' - Core GC3", cor.coeff.args = list(label.x = 75))
+p5 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Optimal Growth Temperature (°C)", ylab = "Difference in 5' - Core GC3", cor.coeff.args = list(label.x = 75))
 p5 <- p5 + theme(text = element_text(size = 18))
-p5 <- p5 + ggtitle("A - Topt vs Difference in 5' - Core GC3") + theme(plot.title = element_text(hjust = -0.2))
+p5 <- p5 + ggtitle("A") + theme(plot.title = element_text(face = "bold"))
 p5 <- p5 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
-p6 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Topt", ylab = "Difference in 3' - Core GC3", cor.coeff.args = list(label.x = 75, label.y = -0.15))
+p6 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Optimal Growth Temperature (°C)", ylab = "Difference in 3' - Core GC3", cor.coeff.args = list(label.x = 75, label.y = -0.15))
 p6 <- p6 + theme(text = element_text(size = 18))
-p6 <- p6 + ggtitle("B - Topt vs Difference in 3' - Core GC3") + theme(plot.title = element_text(hjust = -0.2))
+p6 <- p6 + ggtitle("B") + theme(plot.title = element_text(face = "bold"))
 p6 <- p6 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 df5p3 <- data.frame(data$fp_stab, data$tp_stab, data$mid_stab, data$predictedoptimumtemp)
 df5p3 <- na.omit(df5p3)
 df5p3$f_m <- (df5p3$data.fp_stab - df5p3$data.mid_stab)
 df5p3$f_c <- (df5p3$data.tp_stab - df5p3$data.mid_stab)
-p8 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Topt", ylab = "Difference in 5' - Core Stability", cor.coeff.args = list(label.x = 75))
+p8 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_m", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Optimal Growth Temperature (°C)", ylab = (expression(paste("Difference in 5' - Core mRNA Stability (", Delta, "G)"))), cor.coeff.args = list(label.x = 75))
 p8 <- p8 + theme(text = element_text(size = 18))
-p8 <- p8 + ggtitle("C - Topt vs Difference in 5' - Core mRNA Stability") + theme(plot.title = element_text(hjust = -0.2))
+p8 <- p8 + ggtitle("C") + theme(plot.title = element_text(face = "bold"))
 p8 <- p8 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
-p9 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Topt", ylab = "Difference in 3' - Core Stability", cor.coeff.args = list(label.x = 75))
+p9 <- ggscatter(df5p3, x = "data.predictedoptimumtemp", y = "f_c", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 6, xlab = "Optimal Growth Temperature (°C)", ylab = (expression(paste("Difference in 3' - Core mRNA Stability (", Delta, "G)"))), cor.coeff.args = list(label.x = 75))
 p9 <- p9 + theme(text = element_text(size = 18))
-p9 <- p9 + ggtitle("D - Topt vs Difference in 3' - Core mRNA Stability") + theme(plot.title = element_text(hjust = -0.2))
+p9 <- p9 + ggtitle("D") + theme(plot.title = element_text(face = "bold"))
 p9 <- p9 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 #plotting graphs into pdf

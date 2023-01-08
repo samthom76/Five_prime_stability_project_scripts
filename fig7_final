@@ -29,9 +29,8 @@ p5 <- p5 + annotate("text", x=-0.14, y=0.055, label = paste("Intercept","=",sign
 p5 <- p5 + annotate("text", x=-0.14, y=0.048, label = paste("GC3 Factor","=",signif(summary(lmfp3_cp3)$coefficient[2], digits = 3)), size = 5)
 p5 <- p5 + annotate("text", x=-0.14, y=0.041, label = paste("Temperature Factor","=",signif(summary(lmfp3_cp3)$coefficient[3], digits = 3)), size = 5)
 p5 <- p5 + annotate("text", x=-0.14, y=0.034, label = paste("Combined Factor","=",signif(summary(lmfp3_cp3)$coefficient[4], digits = 3)), size = 5)
-p5 <- p5 + ggtitle("A - Predicted Difference in 5' - Core GC3 vs Differnce in 5' - Core GC3")
-p5 <- p5 + theme(text = element_text(size = 14))
-p5 <- p5 + theme(plot.title = element_text(hjust = 0.4))
+p5 <- p5 + ggtitle("A") + theme(plot.title = element_text(face = "bold"))
+p5 <- p5 + theme(text = element_text(size = 18))
 p5 <- p5 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 #same process as above just new variables
@@ -44,9 +43,8 @@ p6 <- p6 + annotate("text", x=-0.135, y=0.015, label = paste("Intercept","=",sig
 p6 <- p6 + annotate("text", x=-0.135, y=0.009, label = paste("GC3 Factor","=",signif(summary(lmtp3_cp3)$coefficient[2], digits = 3)), size = 5)
 p6 <- p6 + annotate("text", x=-0.135, y=0.003, label = paste("Temperature Factor","=",signif(summary(lmtp3_cp3)$coefficient[3], digits = 3)), size = 5)
 p6 <- p6 + annotate("text", x=-0.135, y=-0.003, label = paste("Combined Factor","=",signif(summary(lmtp3_cp3)$coefficient[4], digits = 3)), size = 5)
-p6 <- p6 + ggtitle("B - Predicted Difference in 3' - Core GC3 vs Differnce in 3' - Core GC3")
-p6 <- p6 + theme(text = element_text(size = 14))
-p6 <- p6 + theme(plot.title = element_text(hjust = 0.4))
+p6 <- p6 + ggtitle("B") + theme(plot.title = element_text(face = "bold"))
+p6 <- p6 + theme(text = element_text(size = 18))
 p6 <- p6 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 
@@ -54,27 +52,25 @@ lmfs_cs <- lm(fs_cs ~ data.gc3_ratio + data.predictedoptimumtemp + data.gc3_rati
 new_data_fs_cs <- data$fs_cs
 pred_fs_cs <- predict(lmfs_cs, new_data_fs_cs)
 dffs_cs <- data.frame(dflm$fs_cs, pred_fs_cs)
-p8 <- ggscatter(dffs_cs, x = "dflm.fs_cs", y = "pred_fs_cs", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 5, xlab = "Difference in 5' - Core Stability", ylab = "Predicted Difference in 5' - Core Stability")
+p8 <- ggscatter(dffs_cs, x = "dflm.fs_cs", y = "pred_fs_cs", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 5, xlab = (expression(paste("Difference in 5' - Core mRNA Stability (", Delta, "G)"))), ylab = (expression(paste("Predicted Difference in 5' - Core mRNA Stability (", Delta, "G)"))))
 p8 <- p8 + annotate("text", x=0.4, y=3.75, label = paste("Intercept","=",signif(summary(lmfs_cs)$coefficient[1], digits = 3)), size = 5)
 p8 <- p8 + annotate("text", x=0.4, y=3.625, label = paste("GC3 Factor","=",signif(summary(lmfs_cs)$coefficient[2], digits = 3)), size = 5)
 p8 <- p8 + annotate("text", x=0.4, y=3.5, label = paste("Temperature Factor","=",signif(summary(lmfs_cs)$coefficient[3], digits = 3)), size = 5)
-p8 <- p8 + ggtitle("C - Predicted Difference in 5' - Core Stability vs Differnce in 5' - Core Stability")
-p8 <- p8 + theme(text = element_text(size = 14))
-p8 <- p8 + theme(plot.title = element_text(hjust = 0.4))
+p8 <- p8 + ggtitle("C") + theme(plot.title = element_text(face = "bold"))
+p8 <- p8 + theme(text = element_text(size = 18))
 p8 <- p8 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 lmts_cs <- lm(ts_cs ~ data.gc3_ratio + data.predictedoptimumtemp + data.gc3_ratio*data.predictedoptimumtemp, data = dflm)
 new_data_ts_cs <- data$ts_cs
 pred_ts_cs <- predict(lmts_cs, new_data_ts_cs)
 dfts_cs <- data.frame(dflm$ts_cs, pred_ts_cs)
-p9 <- ggscatter(dfts_cs, x = "dflm.ts_cs", y = "pred_ts_cs", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 5, xlab = "Difference in 3' - Core Stability", ylab = "Predicted Difference in 3' - Core Stability", cor.coeff.args = list(label.x = 1.6, label.y = 0.6))
+p9 <- ggscatter(dfts_cs, x = "dflm.ts_cs", y = "pred_ts_cs", add = 'none', conf.int = TRUE, cor.coef = TRUE, cor.method = 'spearman', cor.coef.size = 5, xlab = (expression(paste("Difference in 5' - Core mRNA Stability (", Delta, "G)"))), ylab = (expression(paste("Predicted Difference in 3' - Core mRNA Stability (", Delta, "G)"))), cor.coeff.args = list(label.x = 1.6, label.y = 0.6))
 p9 <- p9 + annotate("text", x=2, y=0.587, label = paste("Intercept","=",signif(summary(lmts_cs)$coefficient[1], digits = 3)), size = 5)
 p9 <- p9 + annotate("text", x=2, y=0.574, label = paste("GC3 Factor","=",signif(summary(lmts_cs)$coefficient[2], digits = 3)), size = 5)
 p9 <- p9 + annotate("text", x=2, y=0.561, label = paste("Temperature Factor","=",signif(summary(lmts_cs)$coefficient[3], digits = 3)), size = 5)
 p9 <- p9 + annotate("text", x=2, y=0.548, label = paste("Combined Factor","=",signif(summary(lmts_cs)$coefficient[4], digits = 3)), size = 5)
-p9 <- p9 + ggtitle("D - Predicted Difference in 3' - Core Stability vs Differnce in 3' - Core Stability")
-p9 <- p9 + theme(text = element_text(size = 14))
-p9 <- p9 + theme(plot.title = element_text(hjust = 0.4))
+p9 <- p9 + ggtitle("D") + theme(plot.title = element_text(face = "bold"))
+p9 <- p9 + theme(text = element_text(size = 18))
 p9 <- p9 + theme(plot.margin = unit(c(2.5, 5.5, 2.5, 5.5), "mm"))
 
 pdf(file = "/Users/samthompson/Documents/BioChem/Year_3/Semester_1/Project/R_Project/fig7.pdf", height = 13.2, width = 18)
